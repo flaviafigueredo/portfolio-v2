@@ -243,22 +243,6 @@ function SectionBody({ id }: { id: string }) {
   );
 }
 
-// Mostra no canto da tela em qual seção a pessoa está.
-function StageIndicator() {
-  const activeId = useActiveSection();
-
-  return (
-    <div className="pointer-events-none fixed bottom-16 left-4 z-20 hidden font-mono text-[11px] uppercase tracking-[0.2em] text-white/50 sm:block">
-      {sections.map((section) => (
-        <div key={section.id} className={section.id === activeId ? "text-[#2ae500]" : ""}>
-          {section.id === activeId ? "> " : "  "}
-          {section.id}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function TerminalSections() {
   return (
     <main className="relative z-10">
@@ -275,7 +259,6 @@ export function TerminalSections() {
           </TerminalPanel>
         </section>
       ))}
-      <StageIndicator />
     </main>
   );
 }

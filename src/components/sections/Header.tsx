@@ -1,44 +1,106 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { sections, useActiveSection } from "./TerminalSections";
 
 export function Header() {
   const activeId = useActiveSection();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // fecha o menu do celular com a tecla Esc
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#131313]/80 backdrop-blur-md border-b border-[#564052]/20 shadow-[0_0_15px_rgba(255,0,255,0.1)]"
-      style={{ clipPath: "polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%)" }}
-    >
-      {/* logo / terminal ID */}
-      <div className="text-xl font-bold text-[#ff00ff] drop-shadow-[0_0_8px_rgba(255,0,255,0.4)] font-headline tracking-[0.05em]">
-        TERMINAL_v1.1.0
-      </div>
+    <>
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b border-[#2ae500]/15 bg-[#050507]/85 px-4 font-mono shadow-[0_0_15px_rgba(255,171,243,0.08)] backdrop-blur-md sm:px-6"
+        style={{ clipPath: "polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%)" }}
+      >
+        {/* logo no formato do prompt do terminal */}
+        <a href="#boot" className="text-base font-bold tracking-tight sm:text-lg">
+          <span className="text-[#ffabf3] drop-shadow-[0_0_8px_rgba(255,171,243,0.4)]">flavia@portfolio</span>
+          <span className="text-[#2ae500]">:~$</span>
+        </a>
 
-      {/* navegação desktop */}
-      <nav className="hidden md:flex gap-8 items-center">
-        {sections.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className={`font-headline uppercase tracking-[0.05em] text-sm transition-all duration-200 hover:text-[#00fbfb] hover:drop-shadow-[0_0_5px_rgba(0,251,251,0.5)] ${section.id === activeId
-                ? "text-[#ff00ff] border-b-2 border-[#ff00ff] pb-1"
-                : "text-white opacity-70"
+        {/* navegação desktop */}
+        <nav className="hidden items-center gap-8 md:flex">
+          {sections.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className={`pb-1 text-xs uppercase tracking-[0.2em] transition-all duration-200 hover:text-[#00fbfb] hover:drop-shadow-[0_0_5px_rgba(0,251,251,0.5)] ${
+                section.id === activeId
+                  ? "border-b-2 border-[#ffabf3] text-[#ffabf3]"
+                  : "border-b-2 border-transparent text-white/60"
               }`}
-          >
-            {section.id}
-          </a>
-        ))}
-      </nav>
+            >
+              {section.id}
+            </a>
+          ))}
+        </nav>
 
-      {/* status e ícone de sensores */}
-      <div className="flex items-center gap-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-radio text-primary drop-shadow-[0_0_8px_rgba(255,171,243,0.5)]"><path d="M16.247 7.761a6 6 0 0 1 0 8.478"/><path d="M19.075 4.933a10 10 0 0 1 0 14.134"/><path d="M4.925 19.067a10 10 0 0 1 0-14.134"/><path d="M7.753 16.239a6 6 0 0 1 0-8.478"/><circle cx="12" cy="12" r="2"/></svg>
-      </div>
-    </motion.header>
+        <div className="flex items-center gap-4">
+          {/* status online */}
+          <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/50 sm:flex">
+            <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-[#2ae500] shadow-[0_0_6px_#2ae500]" />
+            online
+          </span>
+
+          {/* botão do menu no celular */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            className="text-xs uppercase tracking-[0.2em] text-white/80 transition-colors hover:text-[#00fbfb] md:hidden"
+          >
+            [ {menuOpen ? "close" : "menu"} ]
+          </button>
+        </div>
+      </motion.header>
+
+      {/* menu do celular em tela cheia */}
+      {menuOpen && (
+        <nav
+          id="mobile-menu"
+          className="fixed inset-0 z-40 bg-[#050507]/95 px-4 pt-24 font-mono backdrop-blur-md md:hidden"
+        >
+          <div className="rounded-[4px] border border-[#2ae500]/25">
+            <div className="border-b border-[#2ae500]/15 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/40">
+              nav :: sections
+            </div>
+            <div className="space-y-1 p-4">
+              <div className="pb-3 text-sm">
+                <span className="text-[#2ae500]">~$</span> <span className="text-white">ls ./sections</span>
+              </div>
+              {sections.map((section, index) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  onClick={() => setMenuOpen(false)}
+                  className={`flex gap-4 py-2 text-lg uppercase tracking-[0.15em] transition-colors hover:text-[#00fbfb] ${
+                    section.id === activeId ? "text-[#ffabf3]" : "text-white/80"
+                  }`}
+                >
+                  <span className="text-white/30">{String(index + 1).padStart(2, "0")}</span>
+                  {section.id}
+                </a>
+              ))}
+            </div>
+          </div>
+        </nav>
+      )}
+    </>
   );
 }
