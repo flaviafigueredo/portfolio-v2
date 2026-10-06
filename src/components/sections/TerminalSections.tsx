@@ -174,17 +174,22 @@ function SectionBody({ id }: { id: string }) {
           and precision <span className="text-[#00fbfb]">Frontend Engineering</span>.
         </Line>
         <Line className="flex flex-wrap gap-3 pt-4">
-          <a
-            href="#projects"
-            className="rounded-[4px] bg-[#ffabf3] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-[#5b005b] transition-shadow hover:shadow-[0_0_20px_rgba(255,171,243,0.5)]"
-          >
-            view_repositories
-          </a>
+          {/* o brilho fica no elemento de fora porque o clip-path cortaria a sombra do próprio botão */}
+          <span className="inline-block transition-[filter] duration-300 hover:drop-shadow-[0_0_10px_rgba(255,171,243,0.6)]">
+            <a
+              href="#projects"
+              className="clip-chamfer block bg-[#ffabf3] px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-[#5b005b]"
+            >
+              view_repositories
+            </a>
+          </span>
+          {/* borda chanfrada feita com duas camadas: a de fora é a cor da borda, a de dentro (1px menor) é o fundo */}
           <a
             href="#contact"
-            className="rounded-[4px] border border-white/40 px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-white/10"
+            className="clip-chamfer-reverse group relative block bg-white/40 px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-white"
           >
-            init_contact
+            <span className="clip-chamfer-reverse absolute inset-px bg-[#050507] transition-colors group-hover:bg-[#1a1a20]" />
+            <span className="relative">init_contact</span>
           </a>
         </Line>
       </>
