@@ -47,6 +47,16 @@
   --radius-4xl: calc(var(--radius) + 16px);
   --shadow-neon:
     0 0 20px rgba(162, 0, 255, 0.5), 0 0 40px rgba(162, 0, 255, 0.2);
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container: #201f1f;
+  --color-surface-dim: #131313;
+  --color-primary: #ffabf3; /* Rosa claro */
+  --color-on-primary: #5b005b;
+  --color-secondary: #ffffff;
+  --color-secondary-fixed: #00fbfb; /* Ciano neon */
+  --color-tertiary: #2ae500; /* Verde terminal */
+  --color-outline-variant: #564052;
+  --color-on-surface-variant: #dcbed4;
 }
 
 :root {
@@ -125,9 +135,32 @@
   body {
     @apply bg-background text-foreground;
   }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }
 
 @layer utilities {
+  .clip-chamfer {
+    clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 5% 100%, 0 85%);
+  }
+  .clip-chamfer-reverse {
+    clip-path: polygon(5% 0, 100% 0, 100% 85%, 95% 100%, 0 100%, 0 15%);
+  }
+  .scanlines {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+  }
+  .grid-bg {
+    background-image: linear-gradient(to right, rgba(86, 64, 82, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(86, 64, 82, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
   @keyframes glitch-slice-1-slow {
     0% {
       clip-path: inset(10% 0 85% 0);

@@ -1,10 +1,11 @@
-import { Hero } from "@/components/sections/Hero";
+import { CityRun } from "@/components/background/CityRun";
+import { TerminalSections } from "@/components/sections/TerminalSections";
 
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      {/* Próximas seções aqui */}
-    </main>
+    <>
+      <CityRun />
+      <TerminalSections />
+    </>
   );
 }
