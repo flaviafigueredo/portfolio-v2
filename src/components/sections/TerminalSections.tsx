@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, MotionConfig, type Variants } from "framer-motion";
+import { useState } from "react";
 import {
   aboutParagraphs,
   contactRows,
@@ -92,6 +93,25 @@ function Line({ children, className = "" }: { children: React.ReactNode; classNa
     <motion.div variants={lineVariants} className={className}>
       {children}
     </motion.div>
+  );
+}
+
+// Mostra o e-mail só depois do clique. Até lá, ele não existe como texto na página.
+function EmailReveal({ encodedEmail, label }: { encodedEmail: string; label: string }) {
+  const [email, setEmail] = useState<string | null>(null);
+
+  if (!email) {
+    return (
+      <button type="button" onClick={() => setEmail(atob(encodedEmail))} className={`${linkClassName} cursor-pointer text-left`}>
+        {label}
+      </button>
+    );
+  }
+
+  return (
+    <a href={`mailto:${email}`} className={linkClassName}>
+      {email}
+    </a>
   );
 }
 
@@ -208,7 +228,9 @@ function SectionBody({ id }: { id: string }) {
       {contactRows.map((row) => (
         <Line key={row.label} className="flex gap-3">
           <span className="w-20 shrink-0 text-neon-cyan">{row.label}</span>
-          {row.href ? (
+          {row.encodedEmail ? (
+            <EmailReveal encodedEmail={row.encodedEmail} label={row.value} />
+          ) : row.href ? (
             <a href={row.href} target="_blank" rel="noopener noreferrer" className={linkClassName}>
               {row.value}
             </a>

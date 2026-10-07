@@ -38,6 +38,12 @@ export type Project = {
   links: ProjectLink[];
 };
 
+// Endereço público do site, usado no sitemap e na imagem de compartilhamento.
+export const siteUrl = "https://portfolio-v2.pages.dev";
+export const siteTitle = "Flávia Figueredo | Desenvolvedora Front-end";
+export const siteDescription =
+  "Flávia Figueredo, desenvolvedora front-end em Porto Alegre. Interfaces rápidas e responsivas, automações, integrações e dados.";
+
 export const githubUrl = "https://github.com/flaviafigueredo";
 export const linkedinUrl = "https://www.linkedin.com/in/flaviafigueredo/";
 
@@ -114,7 +120,17 @@ export const projects: Project[] = [
   },
 ];
 
-export const contactRows = [
+export type ContactRow = {
+  label: string;
+  value: string;
+  href?: string;
+  encodedEmail?: string;
+};
+
+// O e-mail fica em base64 para não aparecer como texto no HTML nem no código, o que dificulta a coleta por robôs de spam.
+// Ele só é decodificado no navegador quando a pessoa clica em "mostrar e-mail".
+export const contactRows: ContactRow[] = [
+  { label: "email", value: "[ mostrar e-mail ]", encodedEmail: "ZmxhdmlhZ2ZpZ3VlcmVkb0BnbWFpbC5jb20=" },
   { label: "github", value: "github.com/flaviafigueredo", href: githubUrl },
   { label: "linkedin", value: "in/flaviafigueredo", href: linkedinUrl },
   { label: "local", value: "Porto Alegre, RS" },
