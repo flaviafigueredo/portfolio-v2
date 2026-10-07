@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, MotionConfig, type Variants } from "framer-motion";
 import {
   aboutParagraphs,
   contactRows,
@@ -15,6 +15,9 @@ import {
 const linkClassName = "text-neon-cyan underline decoration-neon-cyan/40 underline-offset-4 transition-colors hover:text-neon-pink hover:decoration-neon-pink";
 
 const promptColor = "text-neon-green";
+
+const chamferWrapperClassName =
+  "inline-block transition-[filter] duration-300 has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-neon-cyan";
 
 const linesVariants: Variants = {
   hidden: {},
@@ -48,7 +51,7 @@ function TypedCommand({ text }: { text: string }) {
       >
         {text}
       </motion.span>
-      <span className="h-4 w-2 animate-pulse bg-neon-green" />
+      <span aria-hidden="true" className="h-4 w-2 animate-pulse bg-neon-green motion-reduce:animate-none" />
     </div>
   );
 }
@@ -58,7 +61,12 @@ function TerminalPanel({ section, children }: { section: TerminalSection; childr
 
   return (
     <div className="w-full max-w-xl rounded-[4px] border border-neon-green/25 bg-terminal/85 font-mono shadow-[0_0_30px_rgba(0,0,0,0.6)] backdrop-blur-[2px]">
-      <div className="flex justify-between border-b border-neon-green/15 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/40">
+      {section.heading && (
+        <h2 id={`${section.id}-heading`} className="sr-only">
+          {section.heading}
+        </h2>
+      )}
+      <div aria-hidden="true" className="flex justify-between border-b border-neon-green/15 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/55">
         <span>tty{index} :: {section.file}</span>
         <span>{String(index).padStart(2, "0")}/{String(sections.length).padStart(2, "0")}</span>
       </div>
@@ -106,25 +114,27 @@ function SectionBody({ id }: { id: string }) {
           trás delas: <span className="text-neon-green">automações</span>, <span className="text-neon-green">integrações</span> e{" "}
           <span className="text-neon-green">dados</span>.
         </Line>
-        <Line className="text-xs text-white/40">&gt; Porto Alegre, RS</Line>
+        <Line className="text-xs text-white/55">&gt; Porto Alegre, RS</Line>
         <Line className="flex flex-wrap gap-3 pt-4">
-          {/* o brilho fica no elemento de fora porque o clip-path cortaria a sombra do próprio botão */}
-          <span className="inline-block transition-[filter] duration-300 hover:drop-shadow-[0_0_10px_rgba(255,171,243,0.6)]">
+          {/* o brilho e o contorno de foco ficam no elemento de fora porque o clip-path cortaria os dois no próprio botão */}
+          <span className={`${chamferWrapperClassName} hover:drop-shadow-[0_0_10px_rgba(255,171,243,0.6)]`}>
             <a
               href="#projects"
-              className="clip-chamfer block bg-neon-pink px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-neon-pink-ink"
+              className="clip-chamfer block bg-neon-pink px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-neon-pink-ink focus-visible:outline-none"
             >
               view_projects
             </a>
           </span>
           {/* borda chanfrada feita com duas camadas: a de fora é a cor da borda, a de dentro (1px menor) é o fundo */}
-          <a
-            href="#contact"
-            className="clip-chamfer-reverse group relative block bg-white/40 px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-white"
-          >
-            <span className="clip-chamfer-reverse absolute inset-px bg-terminal transition-colors group-hover:bg-terminal-hover" />
-            <span className="relative">init_contact</span>
-          </a>
+          <span className={chamferWrapperClassName}>
+            <a
+              href="#contact"
+              className="clip-chamfer-reverse group relative block bg-white/40 px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-white focus-visible:outline-none"
+            >
+              <span className="clip-chamfer-reverse absolute inset-px bg-terminal transition-colors group-hover:bg-terminal-hover" />
+              <span className="relative">init_contact</span>
+            </a>
+          </span>
         </Line>
       </>
     );
@@ -139,7 +149,7 @@ function SectionBody({ id }: { id: string }) {
         ))}
         <Line className="pt-2 text-neon-pink"># fora do código</Line>
         <Line className="text-white/60">{hobbies.join(" · ")}</Line>
-        <Line className="text-white/40">-- EOF</Line>
+        <Line className="text-white/55">-- EOF</Line>
       </>
     );
   }
@@ -150,7 +160,7 @@ function SectionBody({ id }: { id: string }) {
         {stackGroups.map((group) => (
           <Line key={group.folder} className="pb-1">
             <div className="text-neon-cyan">{group.folder}</div>
-            <div className="text-xs text-white/40"># {group.description}</div>
+            <div className="text-xs text-white/55"># {group.description}</div>
             <div>{group.stack.join("  ")}</div>
           </Line>
         ))}
@@ -166,7 +176,7 @@ function SectionBody({ id }: { id: string }) {
             <div className="flex flex-wrap items-baseline gap-x-2">
               <span className="text-neon-pink">{project.hash}</span>
               <span className="text-white">{project.name}</span>
-              <span className="text-xs text-white/40">
+              <span className="text-xs text-white/55">
                 ({project.tag}, {project.date})
               </span>
             </div>
@@ -182,7 +192,7 @@ function SectionBody({ id }: { id: string }) {
             )}
           </Line>
         ))}
-        <Line className="text-xs text-white/40">
+        <Line className="text-xs text-white/55">
           -- projetos de estudo mais antigos em{" "}
           <a href={githubUrl} target="_blank" rel="noopener noreferrer" className={linkClassName}>
             github.com/flaviafigueredo
@@ -213,20 +223,24 @@ function SectionBody({ id }: { id: string }) {
 
 export function TerminalSections() {
   return (
-    <main className="relative z-10">
-      {sections.map((section) => (
-        <section
-          key={section.id}
-          id={section.id}
-          className={`flex min-h-screen items-center px-4 py-24 sm:px-12 ${
-            section.align === "right" ? "justify-end" : "justify-start"
-          }`}
-        >
-          <TerminalPanel section={section}>
-            <SectionBody id={section.id} />
-          </TerminalPanel>
-        </section>
-      ))}
-    </main>
+    // com "reduzir movimento" ativado no sistema, o framer-motion desliga os deslizamentos e mantém só o aparecer suave
+    <MotionConfig reducedMotion="user">
+      <main className="relative z-10">
+        {sections.map((section) => (
+          <section
+            key={section.id}
+            id={section.id}
+            aria-labelledby={section.heading ? `${section.id}-heading` : undefined}
+            className={`flex min-h-screen items-center px-4 py-24 sm:px-12 ${
+              section.align === "right" ? "justify-end" : "justify-start"
+            }`}
+          >
+            <TerminalPanel section={section}>
+              <SectionBody id={section.id} />
+            </TerminalPanel>
+          </section>
+        ))}
+      </main>
+    </MotionConfig>
   );
 }

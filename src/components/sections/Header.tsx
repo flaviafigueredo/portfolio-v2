@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import { useEffect, useState } from "react";
 import { sections } from "@/content/siteContent";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -20,7 +20,7 @@ export function Header() {
   }, [menuOpen]);
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -35,11 +35,12 @@ export function Header() {
         </a>
 
         {/* navegação desktop */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Seções" className="hidden items-center gap-8 md:flex">
           {sections.map((section) => (
             <a
               key={section.id}
               href={`#${section.id}`}
+              aria-current={section.id === activeId ? "location" : undefined}
               className={`pb-1 text-xs uppercase tracking-[0.2em] transition-all duration-200 hover:text-neon-cyan hover:drop-shadow-[0_0_5px_rgba(0,251,251,0.5)] ${
                 section.id === activeId
                   ? "border-b-2 border-neon-pink text-neon-pink"
@@ -54,7 +55,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           {/* status online */}
           <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/50 sm:flex">
-            <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-neon-green shadow-[0_0_6px_var(--color-neon-green)]" />
+            <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-neon-green motion-reduce:animate-none shadow-[0_0_6px_var(--color-neon-green)]" />
             online
           </span>
 
@@ -75,10 +76,11 @@ export function Header() {
       {menuOpen && (
         <nav
           id="mobile-menu"
+          aria-label="Seções"
           className="fixed inset-0 z-40 bg-terminal/95 px-4 pt-24 font-mono backdrop-blur-md md:hidden"
         >
           <div className="rounded-[4px] border border-neon-green/25">
-            <div className="border-b border-neon-green/15 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/40">
+            <div className="border-b border-neon-green/15 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/55">
               nav :: sections
             </div>
             <div className="space-y-1 p-4">
@@ -94,7 +96,7 @@ export function Header() {
                     section.id === activeId ? "text-neon-pink" : "text-white/80"
                   }`}
                 >
-                  <span className="text-white/30">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="text-white/45">{String(index + 1).padStart(2, "0")}</span>
                   {section.id}
                 </a>
               ))}
@@ -102,6 +104,6 @@ export function Header() {
           </div>
         </nav>
       )}
-    </>
+    </MotionConfig>
   );
 }

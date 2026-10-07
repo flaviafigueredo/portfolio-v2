@@ -20,6 +20,11 @@
     background-color: var(--color-terminal);
     color: #fafafa;
   }
+  /* contorno visível para quem navega pelo teclado */
+  :focus-visible {
+    outline: 2px solid var(--color-neon-cyan);
+    outline-offset: 3px;
+  }
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
