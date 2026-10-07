@@ -35,22 +35,35 @@ export function Header() {
           <span className="text-neon-green">:~$</span>
         </Link>
 
-        {/* navegação desktop */}
-        <nav aria-label="Seções" className="hidden items-center gap-8 md:flex">
-          {sections.map((section) => (
-            <Link
-              key={section.id}
-              href={`/#${section.id}`}
-              aria-current={section.id === activeId ? "location" : undefined}
-              className={`pb-1 text-xs uppercase tracking-[0.2em] transition-all duration-200 hover:text-neon-cyan hover:drop-shadow-[0_0_5px_rgba(0,251,251,0.5)] ${
-                section.id === activeId
-                  ? "border-b-2 border-neon-pink text-neon-pink"
-                  : "border-b-2 border-transparent text-white/60"
-              }`}
-            >
-              {section.id}
-            </Link>
-          ))}
+        {/* navegação desktop (a partir de 1024px): no hover, o nome em inglês dá lugar ao nome em português com um glitch.
+            As duas palavras ficam na mesma célula do grid, então o link já reserva a largura da maior e o menu não pula.
+            auto-cols-fr deixa todas as colunas com a largura da maior palavra (TECNOLOGIAS), para os itens ficarem iguais. */}
+        <nav aria-label="Seções" className="hidden auto-cols-fr grid-flow-col items-center gap-2 lg:grid">
+          {sections.map((section) => {
+            const underlineClassName = section.id === activeId ? "border-neon-pink" : "border-transparent";
+
+            return (
+              <Link
+                key={section.id}
+                href={`/#${section.id}`}
+                aria-current={section.id === activeId ? "location" : undefined}
+                className={`group grid text-xs uppercase tracking-[0.2em] transition-colors duration-200 hover:text-neon-cyan hover:drop-shadow-[0_0_5px_rgba(0,251,251,0.5)] ${
+                  section.id === activeId ? "text-neon-pink" : "text-white/60"
+                }`}
+              >
+                <span className={`col-start-1 row-start-1 justify-self-center border-b-2 pb-1 group-hover:invisible ${underlineClassName}`}>
+                  {section.id}
+                </span>
+                <span
+                  aria-hidden="true"
+                  data-text={section.translatedLabel}
+                  className={`glitch invisible col-start-1 row-start-1 justify-self-center border-b-2 pb-1 group-hover:visible group-hover:glitch-active ${underlineClassName}`}
+                >
+                  {section.translatedLabel}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-4">
@@ -66,7 +79,7 @@ export function Header() {
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className="text-xs uppercase tracking-[0.2em] text-white/80 transition-colors hover:text-neon-cyan md:hidden"
+            className="text-xs uppercase tracking-[0.2em] text-white/80 transition-colors hover:text-neon-cyan lg:hidden"
           >
             [ {menuOpen ? "close" : "menu"} ]
           </button>
@@ -78,7 +91,7 @@ export function Header() {
         <nav
           id="mobile-menu"
           aria-label="Seções"
-          className="fixed inset-0 z-40 bg-terminal/95 px-4 pt-24 font-mono backdrop-blur-md md:hidden"
+          className="fixed inset-0 z-40 bg-terminal/95 px-4 pt-24 font-mono backdrop-blur-md lg:hidden"
         >
           <div className="rounded-[4px] border border-neon-green/25">
             <div className="border-b border-neon-green/15 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/55">
