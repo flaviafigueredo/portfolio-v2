@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, MotionConfig } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { sections } from "@/content/siteContent";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -29,17 +30,17 @@ export function Header() {
         style={{ clipPath: "polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%)" }}
       >
         {/* logo no formato do prompt do terminal */}
-        <a href="#boot" className="text-base font-bold tracking-tight sm:text-lg">
+        <Link href="/#boot" className="text-base font-bold tracking-tight sm:text-lg">
           <span className="text-neon-pink drop-shadow-[0_0_8px_rgba(255,171,243,0.4)]">flavia@portfolio</span>
           <span className="text-neon-green">:~$</span>
-        </a>
+        </Link>
 
         {/* navegação desktop */}
         <nav aria-label="Seções" className="hidden items-center gap-8 md:flex">
           {sections.map((section) => (
-            <a
+            <Link
               key={section.id}
-              href={`#${section.id}`}
+              href={`/#${section.id}`}
               aria-current={section.id === activeId ? "location" : undefined}
               className={`pb-1 text-xs uppercase tracking-[0.2em] transition-all duration-200 hover:text-neon-cyan hover:drop-shadow-[0_0_5px_rgba(0,251,251,0.5)] ${
                 section.id === activeId
@@ -48,7 +49,7 @@ export function Header() {
               }`}
             >
               {section.id}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -88,9 +89,9 @@ export function Header() {
                 <span className="text-neon-green">~$</span> <span className="text-white">ls ./sections</span>
               </div>
               {sections.map((section, index) => (
-                <a
+                <Link
                   key={section.id}
-                  href={`#${section.id}`}
+                  href={`/#${section.id}`}
                   onClick={() => setMenuOpen(false)}
                   className={`flex gap-4 py-2 text-lg uppercase tracking-[0.15em] transition-colors hover:text-neon-cyan ${
                     section.id === activeId ? "text-neon-pink" : "text-white/80"
@@ -98,7 +99,7 @@ export function Header() {
                 >
                   <span className="text-white/45">{String(index + 1).padStart(2, "0")}</span>
                   {section.id}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
