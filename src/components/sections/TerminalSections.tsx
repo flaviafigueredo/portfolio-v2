@@ -221,7 +221,11 @@ function SectionBody({ id }: { id: string }) {
           <Line key={group.folder} className="pb-1">
             <div className="text-neon-cyan">{group.folder}</div>
             <div className="text-xs text-white/55"># {group.description}</div>
-            <div>{group.stack.join("  ")}</div>
+            <div className="flex flex-wrap gap-x-3">
+              {group.stack.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
           </Line>
         ))}
       </>
@@ -242,12 +246,15 @@ function SectionBody({ id }: { id: string }) {
             </div>
             <div className="pl-[8ch] text-white/60">{project.description}</div>
             {project.links.length > 0 && (
-              <div className="flex gap-4 pl-[8ch] text-xs">
-                {project.links.map((link) => (
-                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={linkClassName}>
-                    {link.label}
-                  </a>
-                ))}
+              // o recuo fica no tamanho de fonte da descrição (8ch mede 8 caracteres da fonte atual), e só os links usam a fonte menor
+              <div className="pl-[8ch] text-sm">
+                <div className="flex gap-4 text-xs">
+                  {project.links.map((link) => (
+                    <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={linkClassName}>
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </Line>
