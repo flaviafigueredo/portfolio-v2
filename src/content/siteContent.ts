@@ -14,14 +14,16 @@ export type TerminalSection = {
   command: string;
   align: "left" | "right";
   heading?: string;
+  translatedLabel: string;
 };
 
+// translatedLabel é a versão em português do nome da seção, que aparece com efeito de glitch no hover do menu.
 export const sections: TerminalSection[] = [
-  { id: "boot", file: "init.sh", command: "./init.sh", align: "left" },
-  { id: "about", file: "about.md", command: "cat about.md", align: "right", heading: "Sobre mim" },
-  { id: "stack", file: "stack/", command: "ls -l ./stack", align: "left", heading: "Stack e ferramentas" },
-  { id: "projects", file: "projects.log", command: "git log --oneline projects", align: "right", heading: "Projetos" },
-  { id: "contact", file: "contact", command: "ssh contact@flavia", align: "left", heading: "Contato" },
+  { id: "boot", file: "init.sh", command: "./init.sh", align: "left", translatedLabel: "início" },
+  { id: "about", file: "about.md", command: "cat about.md", align: "right", heading: "Sobre mim", translatedLabel: "sobre" },
+  { id: "stack", file: "stack/", command: "ls -l ./stack", align: "left", heading: "Stack e ferramentas", translatedLabel: "tecnologias" },
+  { id: "projects", file: "projects.log", command: "git log --oneline projects", align: "right", heading: "Projetos", translatedLabel: "projetos" },
+  { id: "contact", file: "contact", command: "ssh contact@flavia", align: "left", heading: "Contato", translatedLabel: "contato" },
 ];
 
 export type ProjectLink = {
@@ -136,3 +138,6 @@ export const contactRows: ContactRow[] = [
   { label: "local", value: "Porto Alegre, RS" },
   { label: "status", value: "aberta a freelas e novas conversas" },
 ];
+
+// Cargo exibido no boot. Os textos se alternam em loop com efeito de glitch.
+export const roleTexts = ["desenvolvedora front-end", "front-end developer"];

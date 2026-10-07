@@ -1,13 +1,14 @@
 "use client";
 
 import { motion, MotionConfig, type Variants } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   aboutParagraphs,
   contactRows,
   githubUrl,
   hobbies,
   projects,
+  roleTexts,
   sections,
   stackGroups,
   type TerminalSection,
@@ -96,6 +97,43 @@ function Line({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
+const glitchInterval = 4000;
+const glitchDuration = 450;
+
+// Alterna entre os textos em loop, com um glitch rápido na troca. Com "reduzir movimento" ativado, fica parado no primeiro texto.
+function GlitchSwap({ texts }: { texts: string[] }) {
+  const [index, setIndex] = useState(0);
+  const [glitching, setGlitching] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const timeouts: number[] = [];
+    const intervalId = window.setInterval(() => {
+      setGlitching(true);
+      timeouts.push(window.setTimeout(() => setIndex((current) => (current + 1) % texts.length), glitchDuration / 2));
+      timeouts.push(window.setTimeout(() => setGlitching(false), glitchDuration));
+    }, glitchInterval);
+
+    return () => {
+      window.clearInterval(intervalId);
+      timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, [texts.length]);
+
+  const text = texts[index];
+
+  return (
+    <>
+      {/* leitores de tela ouvem só o primeiro texto, sem a troca */}
+      <span className="sr-only">{texts[0]}</span>
+      <span aria-hidden="true" data-text={text} className={`glitch inline-block ${glitching ? "glitch-active" : ""}`}>
+        {text}
+      </span>
+    </>
+  );
+}
+
 // Mostra o e-mail só depois do clique. Até lá, ele não existe como texto na página.
 function EmailReveal({ encodedEmail, label }: { encodedEmail: string; label: string }) {
   const [email, setEmail] = useState<string | null>(null);
@@ -128,7 +166,9 @@ function SectionBody({ id }: { id: string }) {
             <span className="text-neon-pink">FIGUEREDO</span>
           </h1>
         </Line>
-        <Line className="pt-2 text-neon-cyan">desenvolvedora front-end</Line>
+        <Line className="pt-2 text-neon-cyan">
+          <GlitchSwap texts={roleTexts} />
+        </Line>
         <Line className="text-white/60">
           Crio <span className="text-white">interfaces rápidas e responsivas</span> e cuido do caminho da informação por
           trás delas: <span className="text-neon-green">automações</span>, <span className="text-neon-green">integrações</span> e{" "}
