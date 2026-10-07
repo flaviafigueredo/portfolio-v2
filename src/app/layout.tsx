@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/sections/Header";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -24,10 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="pt-BR">
       {/* extensões de navegador (como o ColorZilla) adicionam atributos no body antes do React carregar; isso ignora só essa diferença no próprio body */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
         <Header />
