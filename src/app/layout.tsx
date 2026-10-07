@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "flavia@portfolio:~$",
-  description: "Portfólio de Flávia Figueredo, desenvolvedora front-end.",
+  description: "Flávia Figueredo, desenvolvedora front-end em Porto Alegre. Interfaces rápidas e responsivas, automações, integrações e dados.",
 };
 
 export default function RootLayout({
@@ -25,8 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="dark">
+      {/* extensões de navegador (como o ColorZilla) adicionam atributos no body antes do React carregar; isso ignora só essa diferença no próprio body */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <Header />
         {children}
