@@ -5,9 +5,19 @@
   --default-font-family: var(--font-geist-mono);
 }
 
+/* paleta do site: viram classes como text-neon-pink, bg-terminal e border-neon-green/25 */
+@theme {
+  --color-neon-pink: #ffabf3;
+  --color-neon-pink-ink: #5b005b;
+  --color-neon-green: #2ae500;
+  --color-neon-cyan: #00fbfb;
+  --color-terminal: #050507;
+  --color-terminal-hover: #1a1a20;
+}
+
 @layer base {
   body {
-    background-color: #050507;
+    background-color: var(--color-terminal);
     color: #fafafa;
   }
   @media (prefers-reduced-motion: no-preference) {
