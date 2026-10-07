@@ -13,14 +13,15 @@ export type TerminalSection = {
   file: string;
   command: string;
   align: "left" | "right";
+  heading?: string;
 };
 
 export const sections: TerminalSection[] = [
   { id: "boot", file: "init.sh", command: "./init.sh", align: "left" },
-  { id: "about", file: "about.md", command: "cat about.md", align: "right" },
-  { id: "stack", file: "stack/", command: "ls -l ./stack", align: "left" },
-  { id: "projects", file: "projects.log", command: "git log --oneline projects", align: "right" },
-  { id: "contact", file: "contact", command: "ssh contact@flavia", align: "left" },
+  { id: "about", file: "about.md", command: "cat about.md", align: "right", heading: "Sobre mim" },
+  { id: "stack", file: "stack/", command: "ls -l ./stack", align: "left", heading: "Stack e ferramentas" },
+  { id: "projects", file: "projects.log", command: "git log --oneline projects", align: "right", heading: "Projetos" },
+  { id: "contact", file: "contact", command: "ssh contact@flavia", align: "left", heading: "Contato" },
 ];
 
 export type ProjectLink = {
