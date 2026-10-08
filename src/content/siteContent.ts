@@ -41,7 +41,7 @@ export type Project = {
 };
 
 // Endereço público do site, usado no sitemap e na imagem de compartilhamento.
-export const siteUrl = "https://portfolio-v2.pages.dev";
+export const siteUrl = "https://flaviafigueredo.pages.dev";
 export const siteTitle = "Flávia Figueredo | Desenvolvedora Front-end";
 export const siteDescription =
   "Flávia Figueredo, desenvolvedora front-end em Porto Alegre. Interfaces rápidas e responsivas, automações, integrações e dados.";

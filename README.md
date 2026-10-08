@@ -2,7 +2,7 @@
 
 Portfólio pessoal de **Flávia Figueredo**, desenvolvedora front-end em Porto Alegre.
 
-**[portfolio-v2.pages.dev](https://portfolio-v2.pages.dev)**
+**[flaviafigueredo.pages.dev](https://flaviafigueredo.pages.dev)**
 
 ![Tela inicial do portfólio: painel de terminal com o nome Flávia Figueredo sobre uma rua de prédios feitos de caracteres, com trilhos ciano no chão](docs/images/desktop-boot.png)
 
