@@ -136,7 +136,7 @@ export const contactRows: ContactRow[] = [
   { label: "github", value: "github.com/flaviafigueredo", href: githubUrl },
   { label: "linkedin", value: "in/flaviafigueredo", href: linkedinUrl },
   { label: "local", value: "Porto Alegre, RS" },
-  { label: "status", value: "aberta a freelas e novas conversas" },
+  { label: "status", value: "disponível para freelas" },
 ];
 
 // Cargo exibido no boot. Os textos se alternam em loop com efeito de glitch.
