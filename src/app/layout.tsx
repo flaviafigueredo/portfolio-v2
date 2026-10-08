@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Footer } from "@/components/sections/Footer";
 import { Header } from "@/components/sections/Header";
 import { siteDescription, siteTitle, siteUrl } from "@/content/siteContent";
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Footer buildYear={new Date().getFullYear()} />
       </body>
     </html>
   );
