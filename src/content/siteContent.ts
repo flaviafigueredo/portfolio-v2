@@ -79,6 +79,18 @@ export const stackGroups = [
 
 export const projects: Project[] = [
   {
+    hash: "b52f0d9",
+    date: "2026.11",
+    name: "poa-heat",
+    tag: "pessoal",
+    description:
+      "Dashboard que responde se Porto Alegre está ficando mais quente, com a temperatura diária desde 1950: tendência, dias acima de 35 °C e noites quentes. Dados públicos da Open-Meteo, atualizados todo mês por GitHub Actions. Next.js, TypeScript e D3.",
+    links: [
+      { label: "site", href: "https://poa-heat.pages.dev/" },
+      { label: "código", href: `${githubUrl}/poa-heat` },
+    ],
+  },
+  {
     hash: "e91b7a4",
     date: "2026.10",
     name: "gr-vegetal",
@@ -97,17 +109,6 @@ export const projects: Project[] = [
     tag: "este site",
     description: "Next.js, TypeScript e canvas 2D. A cidade passando atrás deste texto é desenhada em tempo real e anda com o seu scroll.",
     links: [],
-  },
-  {
-    hash: "7a3e19c",
-    date: "2024.12",
-    name: "redux-shop",
-    tag: "estudo",
-    description: "Loja com carrinho e estado global em Redux Toolkit. React, Redux e React Router.",
-    links: [
-      { label: "demo", href: "https://redux-shop-livid.vercel.app" },
-      { label: "código", href: `${githubUrl}/redux-shop` },
-    ],
   },
   {
     hash: "3f8d6b2",
